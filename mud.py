@@ -45,9 +45,13 @@ class MudServer(object):
         self._new_events = []
         self._listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
-        self._listen_socket.bind(("0.0.0.0", 8000))
-        self._listen_socket.setblocking(False)
-        self._listen_socket.listen(1)
+        socketOpen = self._listen_socket.connect_ex(('127.0.0.1',80))
+        if socketOpen == 0:
+            self._listen_socket.bind(("0.0.0.0", 8000))
+            self._listen_socket.setblocking(False)
+            self._listen_socket.listen(1)
+        else:
+            print("Port 8000 not open. Shutting down.")
     def update(self):
         self._check_for_new_connections()
         self._check_for_disconnected()
