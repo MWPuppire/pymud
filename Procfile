@@ -1,1 +1,1 @@
-web: python3 pymud.py:
+web: python3 pymud.py
